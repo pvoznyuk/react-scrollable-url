@@ -1,6 +1,6 @@
 {
   "name": "react-scrollable-url",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provide smooth scrolling link and anchors in React.",
   "main": "lib/index.js",
   "files": [
