@@ -17,3 +17,5 @@ export const debounce = (func, wait, immediate) => {
     }
   }
 }
+
+export const createId = ({name, hash}) => `___scroll-section___${name || ''}___${hash || ''}`;

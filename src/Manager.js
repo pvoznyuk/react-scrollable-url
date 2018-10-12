@@ -1,54 +1,83 @@
-import jump from 'jump.js'
-import { debounce } from './utils/func'
-import { getBestAnchorGivenScrollLocation, getScrollTop } from './utils/scroll'
-import { getHash, updateHash, removeHash } from './utils/hash'
+import { debounce } from './utils/func';
+import { getBestAnchorGivenScrollLocation, getScrollTop } from './utils/scroll';
+import { getHash, updateHash, removeHash } from './utils/hash';
 
 const defaultConfig = {
   offset: 0,
   scrollDuration: 400,
-  keepLastAnchorHash: false,
+  keepLastAnchorHash: false
 }
 
 class Manager {
   constructor() {
-    this.anchors = {}
-    this.forcedHash = false
-    this.config = defaultConfig
+    this.anchors = {};
+    this.forcedHash = false;
+    this.config = defaultConfig;
 
-    this.scrollHandler = debounce(this.handleScroll, 100)
-    this.forceHashUpdate = debounce(this.handleHashChange, 1)
+    this.scrollHandler = debounce(this.handleScroll, 100);
+    this.forceHashUpdate = debounce(this.handleHashChange, 1);
+
+    this.basePath = this.getBasePath();
+    this.baseTitle = document.title;
+  }
+
+  getBasePath = (anchors) => {
+    let newBasePath = `${window.location.origin}${window.location.pathname}`.replace(/\/$/, '');
+
+    if (anchors) {
+      Object.keys(anchors).forEach(id => {
+        if (newBasePath.endsWith(anchors[id].name)) {
+          newBasePath = newBasePath.replace(`/${anchors[id].name}`, '');
+        }
+      });
+    }
+
+    return newBasePath;
   }
 
   addListeners = () => {
-    window.addEventListener('scroll', this.scrollHandler, false)
-    window.addEventListener('hashchange', this.handleHashChange)
+    window.addEventListener('scroll', this.scrollHandler, false);
+    window.addEventListener('hashchange', this.handleHashChange);
   }
 
   removeListeners = () => {
-    window.removeEventListener('scroll', this.scrollHandler, false)
-    window.removeEventListener('hashchange', this.handleHashChange)
+    window.removeEventListener('scroll', this.scrollHandler, false);
+    window.removeEventListener('hashchange', this.handleHashChange);
   }
 
   configure = (config) => {
     this.config = {
       ...defaultConfig,
-      ...config,
+      ...config
     }
   }
 
   goToTop = () => {
-    if (getScrollTop() === 0) return
-    this.forcedHash = true
-    window.scroll(0,0)
+    if (getScrollTop() === 0) return;
+    this.forcedHash = true;
+    window.scroll(0,0);
   }
 
-  addAnchor = (id, component) => {
+  addAnchor = ({element, name, hash, id, title}) => {
     // if this is the first anchor, set up listeners
     if (Object.keys(this.anchors).length === 0) {
-      this.addListeners()
+      this.addListeners();
     }
-    this.forceHashUpdate()
-    this.anchors[id] = component
+    this.forceHashUpdate();
+    this.anchors[id] = {
+      component: element,
+      name,
+      hash,
+      title
+    };
+
+    // check if this anchor is the current one
+    if (window.location.href.split('#')[0].endsWith(name)) {
+      this.basePath = this.basePath.replace(`/${name}`, '');
+      // scroll to this section
+      this.goToSection(id);
+    }
+
   }
 
   removeAnchor = (id) => {
@@ -60,41 +89,42 @@ class Manager {
   }
 
   handleScroll = () => {
-    const {offset, keepLastAnchorHash} = this.config
-    const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, offset)
+    const {offset, keepLastAnchorHash} = this.config;
+    const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, offset);
 
-    if (bestAnchorId && getHash() !== bestAnchorId) {
-      this.forcedHash = true
-      updateHash(bestAnchorId, false)
+    if (bestAnchorId && getHash({manager: this}) !== bestAnchorId) {
+      this.forcedHash = true;
+      updateHash({
+        anchor: this.anchors[bestAnchorId],
+        affectHistory: false,
+        manager: this
+      });
     } else if (!bestAnchorId && !keepLastAnchorHash) {
-      removeHash()
+      removeHash({manager: this});
     }
   }
 
   handleHashChange = (e) => {
+    this.basePath = this.getBasePath(this.anchors);
+
     if (this.forcedHash) {
-      this.forcedHash = false
+      this.forcedHash = false;
     } else {
-      this.goToSection(getHash())
+      this.goToSection(getHash({manager: this}));
     }
   }
 
   goToSection = (id) => {
-    let element = this.anchors[id]
+    let element = this.anchors[id] ? this.anchors[id].component : null;
+
     if (element) {
-      jump(element, {
-        duration: this.config.scrollDuration,
-        offset: this.config.offset,
-      })
+      element.scrollIntoView({behavior: 'smooth', block: 'start'});
     } else {
       // make sure that standard hash anchors don't break.
       // simply jump to them.
       element = document.getElementById(id)
       if (element) {
-        jump(element, {
-          duration: 0,
-          offset: this.config.offset,
-        })
+        element.scrollIntoView({behavior: 'smooth', block: 'start'});
       }
     }
   }

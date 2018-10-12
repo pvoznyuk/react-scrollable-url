@@ -1,5 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { goToTop } from '../../../src'
+import { ScrollableLink } from '../../../src'
 
 const styles = {
   container: {
@@ -35,7 +37,9 @@ export default class Section extends Component {
   renderSectionLink = (section) => {
     return (
       <div key={section.id}>
-        <a style={styles.link} href={`#${section.id}`}> {section.label} </a>
+        <ScrollableLink href={ section.link ? section.link : `#${section.id}` }>
+          <a style={ styles.link }>{ section.label }</a>
+        </ScrollableLink>
       </div>
     )
   }

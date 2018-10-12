@@ -1,7 +1,7 @@
 {
-  "name": "react-scrollable-anchor",
-  "version": "0.6.2",
-  "description": "Provide smooth scrolling anchors in React.",
+  "name": "react-scrollable-url",
+  "version": "1.0.0",
+  "description": "Provide smooth scrolling link and anchors in React.",
   "main": "lib/index.js",
   "files": [
     "lib",
@@ -29,22 +29,20 @@
     "page",
     "app",
     "static",
-    "site",
-    "jump"
+    "site"
   ],
-  "author": "Gabe G'Sell <gabergg@gmail.com>",
+  "author": "Pavlo Vozniuk <pavlo.voznyuk@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gabergg/react-scrollable-anchor.git"
+    "url": "https://github.com/pvoznyuk/react-scrollable-url.git"
   },
   "bugs": {
-    "url": "https://github.com/gabergg/react-scrollable-anchor/issues"
+    "url": "https://github.com/pvoznyuk/react-scrollable-url/issues"
   },
-  "homepage": "https://github.com/gabergg/react-scrollable-anchor",
+  "homepage": "https://github.com/pvoznyuk/react-scrollable-url",
   "dependencies": {
-    "jump.js": "1.0.2",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.6.2",
   },
   "peerDependencies": {
     "react": "^15.3.0 || ^16.0.0",

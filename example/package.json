@@ -1,6 +1,6 @@
 {
-  "name": "react-scrollable-anchor-example",
-  "description": "Example for react-scrollable-anchor",
+  "name": "react-scrollable-url-example",
+  "description": "Example for react-scrollable-url",
   "scripts": {
     "start": "webpack-dev-server --env.dev",
     "build": "./node_modules/webpack/bin/webpack.js",
@@ -9,8 +9,10 @@
   "dependencies": {
     "compression": "^1.6.2",
     "express": "^4.14.0",
-    "react": "15.3.0",
-    "react-dom": "15.3.0"
+    "prop-types": "^15.6.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.5.2",
+    "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
     "babel-core": "6.13.2",

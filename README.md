@@ -1,22 +1,22 @@
-react-scrollable-anchor
+react-scrollable-url
 =====================
 
-[![npm version](https://img.shields.io/npm/v/react-scrollable-anchor.svg?style=flat-square)](https://www.npmjs.com/package/react-scrollable-anchor)
+[![npm version](https://img.shields.io/npm/v/react-scrollable-url.svg?style=flat-square)](https://www.npmjs.com/package/react-scrollable-url)
 
-Lightweight library for smooth scrolling anchors in React, tied to URL hash.
+Lightweight library for smooth scrolling ulrls and anchors in React.
 
-* Land on correct anchor when page is loaded, based on URL hash value.
-* Scroll smoothly to anchors when URL hash changes. Easy links to sections with `<a href='#sectionId'>`.
-* URL hash updates automatically to reflect section in view
-* Option to record history on hash changes
+* Land on correct anchor when page is loaded, based on URL hash value or full url path.
+* Scroll smoothly to anchors when in-page URL changes.
+* URL updates automatically to reflect section in view.
+* Option to record history on hash changes.
 
 ```js
-npm install --save react-scrollable-anchor
+npm install --save react-scrollable-url
 ```
 
 ## Examples
 
-[Live Demo](http://gabegsell.com/anchors/) or [Source](https://github.com/gabergg/react-scrollable-anchor/tree/master/example/src/components)
+[Live Demo](https://pvoznyuk.github.io/react-scrollable-url) or [Source](https://github.com/pvoznyuk/react-scrollable-url/tree/master/example/src/components)
 
 To run examples locally, `npm run example`, then open your
 browser to localhost:3210.
@@ -25,29 +25,76 @@ browser to localhost:3210.
 
 ### 1. Creating a scrollable anchor
 
-Use the `ScrollableAnchor` tag to wrap any React element, making it a scrollable anchor.
+Use the `ScrollableSection` tag to wrap any React element(s), making it a scrollable anchor.
 
 ```js
-import React, { Component } from 'react'
-import ScrollableAnchor from 'react-scrollable-anchor'
+import React, { Component } from 'react';
+import ScrollableSection, { ScrollableLink } from 'react-scrollable-url';
 
 export default class Page extends Component {
   render() {
     return (
       <div>
-        <a href='#section1'> Go to section 1 </a>
-        <a href='#section2'> Go to section 2 </a>
-        <ScrollableAnchor id={'section1'}>
+        <ScrollableLink href="/section1">
+          <a> Go to section 1 </a>
+        </ScrollableLink> 
+        
+        <ScrollableLink href="/section2">
+          <a> Go to section 2 </a>
+        </ScrollableLink> 
+
+        <ScrollableSection name={'section1'}>
           <div> Hello World </div>
-        </ScrollableAnchor>
-        <ScrollableAnchor id={'section2'}>
+        </ScrollableSection>
+        
+        <ScrollableSection name={'section2'}>
           <div> How are you world? </div>
-        </ScrollableAnchor>
+        </ScrollableSection>
       </div>
     )
   }
 }
 ```
+
+In this case the address will be changed to `/section1` and `/section2`.
+
+You can also use hashes or combine path and hash updates:
+
+```html
+<ScrollableLink href="#panel1">
+  <a> Go to panel 1 </a>
+</ScrollableLink> 
+
+<ScrollableLink href="#panel2">
+  <a> Go to panel 2 </a>
+</ScrollableLink> 
+
+<ScrollableSection hash={'panel1'}>
+  <div> Panel 1 </div>
+</ScrollableSection>
+
+<ScrollableSection hash={'panel2'}>
+  <div> Panel 2 </div>
+</ScrollableSection>
+```
+
+```html
+<ScrollableLink href="/section1#surprise">
+  <a> Go to section 1, section #surprise</a>
+</ScrollableLink> 
+
+<ScrollableLink href="/section1#nothing">
+  <a> Go to section 1, section #nothing </a>
+</ScrollableLink> 
+
+<ScrollableSection name={'section1'} hash={'surprise'}>
+  <div> Surprise </div>
+</ScrollableSection>
+
+<ScrollableSection name={'section1'} hash={'nothing'}>
+  <div> Nothsing </div>
+</ScrollableSection>
+```    
 
 ### 2. Configure
 
@@ -56,11 +103,11 @@ Access configureAnchors to customize scrolling and anchors.
 ##### Offset all scrollable anchors by a fixed amount
 
 ```js
-import { configureAnchors } from 'react-scrollable-anchor'
+import { configureAnchors } from 'react-scrollable-url'
 
 // Offset all anchors by -60 to account for a fixed header
 // and scroll more quickly than the default 400ms
-configureAnchors({offset: -60, scrollDuration: 200})
+configureAnchors({offset: -60})
 ```
 
 ##### Options:
@@ -68,7 +115,6 @@ configureAnchors({offset: -60, scrollDuration: 200})
 | option                | default          |
 | --------------------  | ---------------- |
 | `offset`              | `0`              |
-| `scrollDuration`      | `400`            |
 | `keepLastAnchorHash`  | `false`          |
 
 ### 3. Utilities
@@ -78,42 +124,16 @@ A small toolkit of scrolling utilies for use with anchors
 ##### Jump to top of page in a way that plays nicely with scrollable anchors
 
 ```js
-import { goToTop } from 'react-scrollable-anchor'
+import { goToTop } from 'react-scrollable-url'
 
 // scroll to top of the page
 goToTop()
 ```
 
-##### Scroll to any scrollable anchor, with option to record history
-
-```js
-import { goToAnchor } from 'react-scrollable-anchor'
-
-// scroll to #section1 without saving that hash update in history
-goToAnchor('section1')
-goToAnchor('section1', false)
-
-// scroll to #section1, saving that hash update in history
-goToAnchor('section1', true)
-```
-
-##### Clear the URL hash without affecting scroll location at all
-
-```js
-import { removeHash } from 'react-scrollable-anchor'
-
-// clear URL hash
-removeHash()
-```
-
 ## Issues and feature requests
 
-Please open issues on [Github](https://github.com/gabergg/react-scrollable-anchor/issues). Issues are easier to address if you include context and code samples.
+Please open issues on [Github](https://github.com/pvoznyuk/react-scrollable-url/issues). Issues are easier to address if you include context and code samples.
 
 ## Contributing
 
 Please contribute!
-
-## Feedback or contact
-
-Feel free to contact me at gabergg@gmail.com.
