@@ -3,8 +3,7 @@ import { getBestAnchorGivenScrollLocation, getScrollTop } from './utils/scroll';
 import { getHash, updateHash, removeHash } from './utils/hash';
 
 const defaultConfig = {
-  offset: 0,
-  scrollDuration: 400,
+  offset: -1,
   keepLastAnchorHash: false
 }
 
@@ -75,7 +74,12 @@ class Manager {
     if (window.location.href.endsWith(`${name}${hash ? `#${hash}` : ''}`)) {
       this.basePath = this.basePath.replace(`/${name}`, '');
       // scroll to this section
-      setTimeout(() => this.goToSection(id), 10);
+      setTimeout(() => {
+        this.goToSection(id);
+        if (title) {
+          document.title = title;
+        }
+      }, 10);
     }
   }
 
