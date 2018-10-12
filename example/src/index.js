@@ -8,7 +8,7 @@ import App from './components/App'
 
 const render = () => {
   ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <AppContainer>
         <App/>
       </AppContainer>
