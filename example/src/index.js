@@ -6,11 +6,9 @@ import './styles/reset.css'
 
 import App from './components/App'
 
-console.info('PUBLIC_URL', process.env.PUBLIC_URL);
-
 const render = () => {
   ReactDOM.render(
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename={window.PUBLIC_URL || null}>
       <AppContainer>
         <App/>
       </AppContainer>
