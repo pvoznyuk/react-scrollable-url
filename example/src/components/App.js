@@ -81,9 +81,12 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={Example1} />
           <Route path="/hashes" component={Example1} />
-          <Route path="/pathnames" component={Example2} />
-          <Route path="/mixed" component={Example3} />
-          <Route path="/nested" component={Example4} />
+          <Route exact path="/pathnames" component={Example2} />
+          <Route path="/pathnames/:section" component={Example2} />
+          <Route exact path="/mixed" component={Example3} />
+          <Route path="/mixed/:section" component={Example3} />
+          <Route exact path="/nested" component={Example4} />
+          <Route path="/nested/:section" component={Example4} />
         </Switch>
 
       </div>

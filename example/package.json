@@ -3,7 +3,7 @@
   "description": "Example for react-scrollable-url",
   "scripts": {
     "start": "webpack-dev-server --env.dev",
-    "build": "./node_modules/webpack/bin/webpack.js",
+    "build": "webpack",
     "clean": "rm -rf dist"
   },
   "dependencies": {

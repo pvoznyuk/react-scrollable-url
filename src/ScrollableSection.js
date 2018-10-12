@@ -19,8 +19,8 @@ export default class ScrollableSection extends Component {
 
   constructor(props) {
     super(props);
-    this.name = props.name || null;
-    this.hash = props.hash || props.children.ref || null;
+    this.name = (props.name || '').replace(/^\/|\/$/, '') || null;
+    this.hash = (props.hash || '').replace(/^\#/, '') || props.children.ref || null;
     this.title = props.title || null;
     this.id = createId({name: this.name, hash: this.hash});
   }
