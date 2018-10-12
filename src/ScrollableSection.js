@@ -19,7 +19,7 @@ export default class ScrollableSection extends Component {
 
   constructor(props) {
     super(props);
-    this.name = (props.name || '').replace(/^\/|\/$/, '') || null;
+    this.name = (props.name || '').replace(/^\//, '') || null;
     this.hash = (props.hash || '').replace(/^\#/, '') || props.children.ref || null;
     this.title = props.title || null;
     this.id = createId({name: this.name, hash: this.hash});
@@ -80,18 +80,17 @@ export class ScrollableLink extends Component {
       const hash = pathParts[1] || null;
       const id = createId({name, hash});
 
-      updateHash({
-        anchor: Manager.anchors[id],
-        affectHistory: false,
-        manager: Manager
-      });
+      if (Manager.anchors[id]) {
+        updateHash({
+          anchor: Manager.anchors[id],
+          affectHistory: false,
+          manager: Manager
+        });
 
-      Manager.goToSection(id);
-
+        Manager.goToSection(id);
+      }
     } else {
-
       removeHash({manager: Manager});
-
     }
   }
 
