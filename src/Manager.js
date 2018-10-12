@@ -55,7 +55,7 @@ class Manager {
   goToTop = () => {
     if (getScrollTop() === 0) return;
     this.forcedHash = true;
-    window.scroll(0,0);
+    window.scroll(0, 0);
   }
 
   addAnchor = ({element, name, hash, id, title}) => {
@@ -72,12 +72,11 @@ class Manager {
     };
 
     // check if this anchor is the current one
-    if (window.location.href.split('#')[0].endsWith(name)) {
+    if (window.location.href.endsWith(`${name}${hash ? `#${hash}` : ''}`)) {
       this.basePath = this.basePath.replace(`/${name}`, '');
       // scroll to this section
-      this.goToSection(id);
+      setTimeout(() => this.goToSection(id), 10);
     }
-
   }
 
   removeAnchor = (id) => {
