@@ -27,6 +27,7 @@ export default class ScrollableSection extends Component {
 
   componentDidMount() {
     const element = ReactDOM.findDOMNode(this.refs[Object.keys(this.refs)[0]]);
+
     Manager.addAnchor({
       element,
       name: this.name,

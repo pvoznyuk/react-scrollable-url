@@ -17,8 +17,7 @@ export const updateHash = ({anchor, affectHistory, manager}) => {
   const {basePath} = manager;
   const method = affectHistory ? 'pushState' : 'replaceState';
   const newPath = `${name ? `${exact ? window.location.origin : basePath}/${name}` : basePath}${hash ? `#${hash}` : ''}`;
-console.log('newPath', newPath, exact);
-
+  
   window.history[method](undefined, undefined, newPath);
 
   if (title) {
