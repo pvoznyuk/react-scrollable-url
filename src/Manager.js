@@ -4,7 +4,8 @@ import { getHash, updateHash, removeHash } from './utils/hash';
 
 const defaultConfig = {
   offset: -1,
-  keepLastAnchorHash: false
+  keepLastAnchorHash: false,
+  debounce: 100,
 }
 
 class Manager {
@@ -13,7 +14,7 @@ class Manager {
     this.forcedHash = false;
     this.config = defaultConfig;
 
-    this.scrollHandler = debounce(this.handleScroll, 100);
+    this.scrollHandler = debounce(this.handleScroll, ~~this.config.debounce);
     this.forceHashUpdate = debounce(this.handleHashChange, 1);
 
     this.basePath = this.getBasePath();
@@ -35,12 +36,12 @@ class Manager {
   }
 
   addListeners = () => {
-    window.addEventListener('scroll', this.scrollHandler, false);
+    window.addEventListener('scroll', this.scrollHandler, true);
     window.addEventListener('hashchange', this.handleHashChange);
   }
 
   removeListeners = () => {
-    window.removeEventListener('scroll', this.scrollHandler, false);
+    window.removeEventListener('scroll', this.scrollHandler, true);
     window.removeEventListener('hashchange', this.handleHashChange);
   }
 

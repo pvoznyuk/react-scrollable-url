@@ -126,6 +126,7 @@ configureAnchors({offset: -60})
 | --------------------  | ---------------- |
 | `offset`              | `0`              |
 | `keepLastAnchorHash`  | `false`          |
+| `debounce`            | `100`            |
 
 ### 3. Utilities
 
