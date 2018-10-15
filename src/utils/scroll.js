@@ -5,7 +5,7 @@ export const getScrollTop = () => {
 // get vertical offsets of element, taking scrollTop into consideration
 export const getElementOffset = (element) => {
   const scrollTop = getScrollTop()
-  const {top, bottom} = element.getBoundingClientRect()
+  const {top, bottom} = element ? element.getBoundingClientRect() : {top: 0, bottom: 0};
   return {
     top: Math.floor(top + scrollTop),
     bottom: Math.floor(bottom + scrollTop)

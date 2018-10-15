@@ -94,9 +94,17 @@ You can also use hashes or combine path and hash updates:
 </ScrollableSection>
 
 <ScrollableSection name={'section1'} hash={'nothing'}>
-  <div> Nothsing </div>
+  <div> Nothing </div>
 </ScrollableSection>
 ```    
+
+You can also use `exact` prop if you want ot replace whole path with the given name/anchor.
+
+```html 
+<ScrollableSection name={'section1'} exact>
+  <div> Content </div>
+</ScrollableSection>
+```
 
 ### 2. Configure
 

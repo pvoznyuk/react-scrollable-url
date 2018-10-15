@@ -13,10 +13,11 @@ export const getHash = ({manager}) => {
 }
 
 export const updateHash = ({anchor, affectHistory, manager}) => {
-  const {hash, name, title} = anchor;
+  const {hash, name, title, exact} = anchor;
   const {basePath} = manager;
   const method = affectHistory ? 'pushState' : 'replaceState';
-  const newPath = `${name ? `${basePath}/${name}` : basePath}${hash ? `#${hash}` : ''}`;
+  const newPath = `${name ? `${exact ? window.location.origin : basePath}/${name}` : basePath}${hash ? `#${hash}` : ''}`;
+console.log('newPath', newPath, exact);
 
   window.history[method](undefined, undefined, newPath);
 

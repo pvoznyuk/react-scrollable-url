@@ -31,6 +31,7 @@ export default class ScrollableSection extends Component {
       element,
       name: this.name,
       hash: this.hash,
+      exact: !!this.props.exact,
       id: this.id,
       title: this.title ? this.props.formatTitle(document.title, this.title) : null
     });

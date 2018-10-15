@@ -25,7 +25,7 @@ class Manager {
 
     if (anchors) {
       Object.keys(anchors).forEach(id => {
-        if (newBasePath.endsWith(anchors[id].name)) {
+        if (!anchors[id].exact && newBasePath.endsWith(anchors[id].name)) {
           newBasePath = newBasePath.replace(`/${anchors[id].name}`, '');
         }
       });
@@ -57,7 +57,7 @@ class Manager {
     window.scroll(0, 0);
   }
 
-  addAnchor = ({element, name, hash, id, title}) => {
+  addAnchor = ({element, name, hash, id, title, exact}) => {
     // if this is the first anchor, set up listeners
     if (Object.keys(this.anchors).length === 0) {
       this.addListeners();
@@ -67,7 +67,8 @@ class Manager {
       component: element,
       name,
       hash,
-      title
+      title,
+      exact
     };
 
     // check if this anchor is the current one
