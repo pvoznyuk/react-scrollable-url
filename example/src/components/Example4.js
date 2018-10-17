@@ -21,7 +21,7 @@ const styles = {
 export default class Example4 extends Component {
 
   componentWillMount() {
-    configureAnchors({offset: -60})
+    configureAnchors({offset: 60})
   }
 
   renderSection = (section) => {

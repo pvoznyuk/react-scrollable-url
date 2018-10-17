@@ -117,7 +117,7 @@ import { configureAnchors } from 'react-scrollable-url'
 
 // Offset all anchors by -60 to account for a fixed header
 // and scroll more quickly than the default 400ms
-configureAnchors({offset: -60})
+configureAnchors({offset: 60})
 ```
 
 ##### Options:

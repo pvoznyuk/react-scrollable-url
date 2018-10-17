@@ -13,7 +13,7 @@ const sections = [
 export default class Example3 extends Component {
 
   componentWillMount() {
-    configureAnchors({offset: -60})
+    configureAnchors({offset: 60})
   }
 
   renderSection = (section) => {

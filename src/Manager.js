@@ -3,7 +3,7 @@ import { getBestAnchorGivenScrollLocation, getScrollTop } from './utils/scroll';
 import { getHash, updateHash, removeHash } from './utils/hash';
 
 const defaultConfig = {
-  offset: -1,
+  offset: 0,
   keepLastAnchorHash: false,
   debounce: 100,
 }
@@ -95,7 +95,7 @@ class Manager {
 
   handleScroll = () => {
     const {offset, keepLastAnchorHash} = this.config;
-    const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, offset);
+    const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, -offset);
 
     if (bestAnchorId && getHash({manager: this}) !== bestAnchorId) {
       this.forcedHash = true;
