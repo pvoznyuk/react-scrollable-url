@@ -5,7 +5,7 @@ import { getHash, updateHash, removeHash } from './utils/hash';
 const defaultConfig = {
   offset: 0,
   keepLastAnchorHash: false,
-  debounce: 100,
+  debounce: 100
 }
 
 class Manager {
@@ -120,18 +120,17 @@ class Manager {
   }
 
   goToSection = (id) => {
-    let element = this.anchors[id] ? this.anchors[id].component : null;
+    const element = (this.anchors[id] ? this.anchors[id].component : null) || document.getElementById(id);
+    const {offset} = this.config;
 
-    if (element) {
-      element.scrollIntoView({behavior: 'smooth', block: 'start'});
-    } else {
-      // make sure that standard hash anchors don't break.
-      // simply jump to them.
-      element = document.getElementById(id)
-      if (element) {
-        element.scrollIntoView({behavior: 'smooth', block: 'start'});
-      }
-    }
+    const elementPosition = element ? element.getBoundingClientRect().top : 0;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+       top: offsetPosition,
+       behavior: 'smooth'
+    });
+
   }
 }
 
