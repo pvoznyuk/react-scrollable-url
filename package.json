@@ -1,6 +1,6 @@
 {
   "name": "react-scrollable-url",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Provide smooth scrolling link and anchors in React.",
   "main": "lib/index.js",
   "files": [
@@ -42,8 +42,7 @@
   },
   "homepage": "https://github.com/pvoznyuk/react-scrollable-url",
   "dependencies": {
-    "prop-types": "^15.6.2",
-    "react-dom": "^16.0.0"
+    "prop-types": "^15.6.2"
   },
   "peerDependencies": {
     "react": "^15.3.0 || ^16.0.0",
