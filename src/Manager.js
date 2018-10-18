@@ -5,7 +5,10 @@ import { getHash, updateHash, removeHash } from './utils/hash';
 const defaultConfig = {
   offset: 0,
   keepLastAnchorHash: false,
-  debounce: 100
+  debounce: 100,
+  scrollDelay: 0,
+  scrollBehaviour: 'smooth',
+
 }
 
 class Manager {
@@ -75,13 +78,6 @@ class Manager {
     // check if this anchor is the current one
     if (window.location.href.endsWith(`${name}${hash ? `#${hash}` : ''}`)) {
       this.basePath = this.basePath.replace(`/${name}`, '');
-      // scroll to this section
-      setTimeout(() => {
-        this.goToSection(id);
-        if (title) {
-          document.title = title;
-        }
-      }, 10);
     }
   }
 
@@ -115,23 +111,28 @@ class Manager {
     if (this.forcedHash) {
       this.forcedHash = false;
     } else {
-      this.goToSection(getHash({manager: this}));
+      this.goToSection(getHash({manager: this}), this.config.scrollDelay);
     }
   }
 
-  goToSection = (id) => {
+  goToSection = (id, delay = 0) => {
     const element = (this.anchors[id] ? this.anchors[id].component : null) || document.getElementById(id);
     const {offset} = this.config;
 
-    const elementPosition = element ? element.getBoundingClientRect().top : 0;
-    const offsetPosition = elementPosition - offset;
+    if (element) {
+      setTimeout(() => {
+        const marginTop = ~~(element.currentStyle || window.getComputedStyle(element)).marginTop.replace(/\D+/g, '');
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition - offset;
 
-    window.scrollTo({
-       top: offsetPosition,
-       behavior: 'smooth'
-    });
-
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: this.config.scrollBehaviour
+          });
+      }, delay);
+    }
   }
+
 }
 
 export default new Manager()

@@ -122,11 +122,13 @@ configureAnchors({offset: 60})
 
 ##### Options:
 
-| option                | default          |
-| --------------------  | ---------------- |
-| `offset`              | `0`              |
-| `keepLastAnchorHash`  | `false`          |
-| `debounce`            | `100`            |
+| option                | default          | description      |
+| --------------------  | ---------------- | ---------------- |
+| `offset`              | `0`              | Offset from top on scrolling to the section. Can be used if you have a sticky header.
+| `keepLastAnchorHash`  | `false`          | Keep last anchor hash
+| `debounce`            | `100`            | Debouce the scroll event
+| `scrollDelay`         | `0`              | Delay between page load and scrolling to the corresponding section
+| `scrollBehaviour`     | `smooth`         | Can be `smooth`, `instant` and `auto` 
 
 ### 3. Utilities
 
