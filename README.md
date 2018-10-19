@@ -128,7 +128,8 @@ configureAnchors({offset: 60})
 | `keepLastAnchorHash`  | `false`          | Keep last anchor hash
 | `debounce`            | `100`            | Debouce the scroll event
 | `scrollDelay`         | `0`              | Delay between page load and scrolling to the corresponding section
-| `scrollBehaviour`     | `smooth`         | Can be `smooth`, `instant` and `auto` 
+| `scrollBehaviour`     | `'smooth'`       | Can be `'smooth'`, `'instant'` and `'auto'` 
+| `scrollOnImagesLoad`  | `false`          | Wait until all the images are loaded before scrolling to the section on page load 
 
 ### 3. Utilities
 

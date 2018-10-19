@@ -8,8 +8,10 @@ const defaultConfig = {
   debounce: 100,
   scrollDelay: 0,
   scrollBehaviour: 'smooth',
-
+  scrollOnImagesLoad: false
 }
+
+const EVENT_IMAGES_LOADED = 'images:loaded';
 
 class Manager {
   constructor() {
@@ -22,6 +24,33 @@ class Manager {
 
     this.basePath = this.getBasePath();
     this.baseTitle = document.title;
+    this.imagesAreLoaded = false;
+
+    setTimeout(() => {
+      if (this.config.scrollOnImagesLoad) {
+        const imgs = document.images;
+        const len = imgs.length;
+        let counter = 0;
+
+        const incrementCounter = () => {
+          counter++;
+          if (counter === len) {
+            this.imagesAreLoaded = true;
+            const event = new Event(EVENT_IMAGES_LOADED);
+            window.dispatchEvent(event);
+          }
+        }
+
+        [].forEach.call(imgs, img => {
+          if (img.complete) {
+            incrementCounter();
+          } else {
+            img.addEventListener('load', incrementCounter, false);
+          }
+        });
+
+      }
+    });
   }
 
   getBasePath = (anchors) => {
@@ -58,7 +87,10 @@ class Manager {
   goToTop = () => {
     if (getScrollTop() === 0) return;
     this.forcedHash = true;
-    window.scroll(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: this.config.scrollBehaviour
+    });
   }
 
   addAnchor = ({element, name, hash, id, title, exact}) => {
@@ -111,7 +143,14 @@ class Manager {
     if (this.forcedHash) {
       this.forcedHash = false;
     } else {
-      this.goToSection(getHash({manager: this}), this.config.scrollDelay);
+      const runScrollingToSection = (delay) => this.goToSection(getHash({manager: this}), delay);
+
+      if (this.config.scrollOnImagesLoad && !this.imagesAreLoaded) {
+        window.addEventListener(EVENT_IMAGES_LOADED, runScrollingToSection, false);
+      } else {
+        runScrollingToSection(this.config.scrollDelay);
+      }
+
     }
   }
 
@@ -128,7 +167,7 @@ class Manager {
         window.scrollTo({
           top: offsetPosition,
           behavior: this.config.scrollBehaviour
-          });
+        });
       }, delay);
     }
   }
