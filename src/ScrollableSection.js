@@ -43,11 +43,11 @@ export default class ScrollableSection extends Component {
   }
 
   render() {
-    const {children} = this.props;
+    const {children, name, hash, title, formatTitle, ...props} = this.props;
 
     if (Array.isArray(children)) {
       return (
-        <div ref={this.id}>
+        <div ref={this.id} {...props}>
           {React.Children.map(children, child => (
             React.cloneElement(child, {})
           ))}
@@ -56,7 +56,8 @@ export default class ScrollableSection extends Component {
     }
 
     return React.cloneElement(children, {
-      ref: children.ref || this.id
+      ref: children.ref || this.id,
+      ...props
     });
 
   }
