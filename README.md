@@ -1,3 +1,6 @@
+DEPRECATED! use [react-update-url-on-scroll](https://github.com/pvoznyuk/react-update-url-on-scroll) instead.
+=====================
+
 react-scrollable-url
 =====================
 
